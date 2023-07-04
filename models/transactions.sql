@@ -25,7 +25,7 @@ set grouping = {
 -%}
 
 with transactions as (
-    select * from {{ ref('stg_transactions') }}
+    select * from {{ ref('stg_tomorrow__transactions') }}
 ),
 
 expenses as (
