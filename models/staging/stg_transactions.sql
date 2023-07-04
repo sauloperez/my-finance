@@ -27,11 +27,13 @@ set description = {
 
 with source as (
 
-    select * from raw_tomorrow where account_type = 'Personal Account'
+    select *
+    from {{ source('tomorrow', 'raw_transactions') }}
+    where account_type = 'Personal Account'
 
 ),
 
-transformed as (
+normalized as (
     select
         account_type,
         booking_date,
@@ -69,7 +71,7 @@ recategorized as (
 
             else raw_category
         end as category
-    from transformed
+    from normalized
 )
 
 select * from recategorized

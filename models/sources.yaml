@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: tomorrow
+    database: my_finance  
+    tables:
+      - name: raw_transactions

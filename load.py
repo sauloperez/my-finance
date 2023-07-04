@@ -5,7 +5,8 @@ connection = duckdb.connect(database="my_finance.duckdb")
 # replace the thousand separator and then the decimal one
 connection.execute(
     """
-    CREATE TABLE raw_tomorrow AS
+    CREATE SCHEMA IF NOT EXISTS tomorrow;
+    CREATE TABLE tomorrow.raw_transactions AS
         SELECT
             *,
             replace(replace(amount, '.', ''), ',', '.') AS normalized_amount,
