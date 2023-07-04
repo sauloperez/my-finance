@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: transactions
+    description: information about categorized bank transactions
+
+    columns:
+      - name: id
+        decription: unique identifier of the transaction
+        tests:
+          - unique
+          - not_null
+
+      - name: amount
+        description: monetary amount in euros
+        tests:
+          - not_null
+
+      - name: category
+        description: type of transaction based on my own categories
+        tests:
+          - accepted_values:
+              values: ['savings', 'rent', 'transport', 'investments', 'shopping', 'leisure', 'atm withdrawal', 'restaurants', 'transfers', 'groceries', 'utilities', 'healthcare', 'travel', 'donations', 'other', 'direct debit', 'business', 'income']
