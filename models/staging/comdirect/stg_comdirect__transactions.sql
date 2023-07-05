@@ -7,7 +7,7 @@ translated as (
         buchungstag as booking_date,
         vorgang as booking_type,
         buchungstext as description,
-        'Umsatz in EUR' as amount
+        "Umsatz in EUR" as amount
     from source
 )
 
