@@ -22,6 +22,12 @@ set description = {
   '%lloguer%': 'rent',
   '%Abrechnung%': 'rent',
   'urban sports %': 'leisure',
+  '%HOTEL%': 'travel',
+  'VUELING%': 'travel',
+  'KIWI.COM%': 'travel',
+  'Aral Station%': 'travel',
+  'ESTNER GMBH, HOLZKIRCHEN': 'travel',
+  'ADAC CM HOLZKIRCHEN, HOLZKIRCHEN': 'travel',
 }
 %}
 
