@@ -5,3 +5,8 @@ sources:
     database: my_finance  
     tables:
       - name: raw_transactions
+
+  - name: comdirect
+    database: my_finance
+    tables:
+      - name: raw_transactions
