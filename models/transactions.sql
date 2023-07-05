@@ -18,6 +18,7 @@ set grouping = {
         "other",
         "direct debit",
         "business",
+        "donations",
     ],
     "savings": ["savings", "investments"],
 }
