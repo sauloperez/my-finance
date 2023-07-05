@@ -66,7 +66,7 @@ df = connection.execute(
     """
     SELECT 
         parent_category,
-        abs(SUM(amount_cents)) AS total,
+        abs(SUM(amount_cents)) / 100 AS total,
         abs(SUM(amount)) / (SELECT abs(SUM(amount)) FROM transactions) * 100 AS relative_amount,
         ceil(abs(SUM(amount)) / (SELECT abs(SUM(amount)) FROM transactions) * 100) || '%' AS relative,
     FROM transactions
