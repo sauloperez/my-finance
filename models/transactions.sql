@@ -3,7 +3,6 @@ set grouping = {
     "needs": [
         "rent",
         "transport",
-        "leisure",
         "atm withdrawal",
         "groceries",
         "utilities",
