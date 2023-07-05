@@ -50,6 +50,7 @@ normalized as (
         description,
         currency,
         normalized_amount::DECIMAL as amount,
+        (normalized_amount::DECIMAL * 100)::INT as amount_cents,
         lcase(category) as raw_category,
         row_number() over (order by booking_date, amount) as id
     from source

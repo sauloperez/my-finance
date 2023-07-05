@@ -1,5 +1,6 @@
 import streamlit as st
 import duckdb
+import locale
 
 connection = duckdb.connect("my_finance.duckdb")
 
@@ -59,12 +60,15 @@ st.write("Mitjana:", df["amount"].mean())
 
 st.subheader("Despeses per grup")
 
+locale.setlocale(locale.LC_ALL, "ca_ES.utf8")
+
 df = connection.execute(
     """
     SELECT 
         parent_category,
-        abs(SUM(amount)) || ' €' AS total,
-        abs(SUM(amount)) / (SELECT abs(SUM(amount)) FROM transactions) * 100 AS relative
+        abs(SUM(amount_cents)) AS total,
+        abs(SUM(amount)) / (SELECT abs(SUM(amount)) FROM transactions) * 100 AS relative_amount,
+        ceil(abs(SUM(amount)) / (SELECT abs(SUM(amount)) FROM transactions) * 100) || '%' AS relative,
     FROM transactions
     GROUP BY parent_category
     ORDER BY
@@ -76,6 +80,7 @@ df = connection.execute(
     END;
     """
 ).df()
-df
+df["total"] = df["total"].apply(lambda x: locale.currency(x, grouping=True))
+df[["parent_category", "total", "relative"]]
 
-st.bar_chart(df, x="parent_category", y="relative")
+st.bar_chart(df, x="parent_category", y="relative_amount")

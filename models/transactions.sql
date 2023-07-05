@@ -43,6 +43,7 @@ grouped as (
         description,
         currency,
         amount,
+        amount_cents,
         case
 
           {% for name, categories in grouping.items() -%}
