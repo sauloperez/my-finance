@@ -16,7 +16,9 @@ categories = connection.execute(
 ).df()
 parent_categories = connection.execute(
     """
-    SELECT DISTINCT(parent_category) FROM transactions;
+    SELECT DISTINCT(parent_category) FROM transactions
+    UNION
+    SELECT '' AS parent_category
     """
 ).df()
 
@@ -25,20 +27,31 @@ parent_category_option = None
 left_column, right_column = st.columns(2)
 
 with left_column:
-    parent_category_option = st.selectbox("Grup", parent_categories)
-
-with right_column:
     category_option = st.selectbox("Categoria", categories)
 
-df = connection.execute(
-    """
-    SELECT *
-    FROM transactions
-    WHERE category = ?
-        AND parent_category = ?
-    """,
-    [category_option, parent_category_option],
-).df()
+with right_column:
+    parent_category_option = st.selectbox("Grup", parent_categories)
+
+if parent_category_option == "":
+    df = connection.execute(
+        """
+        SELECT *
+        FROM transactions
+        WHERE category = ?
+        """,
+        [category_option],
+    ).df()
+else:
+    df = connection.execute(
+        """
+        SELECT *
+        FROM transactions
+        WHERE category = ?
+            AND parent_category = ?
+        """,
+        [category_option, parent_category_option],
+    ).df()
+
 df
 
 st.write("Total:", df["amount"].sum())
