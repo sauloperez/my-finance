@@ -7,7 +7,6 @@ set grouping = {
         "groceries",
         "utilities",
         "healthcare",
-        "income",
     ],
     "wants": [
         "shopping",
@@ -28,12 +27,6 @@ with transactions as (
     select * from {{ ref('stg_tomorrow__transactions') }}
 ),
 
-expenses as (
-    select *
-    from transactions
-    where amount < 0
-),
-
 grouped as (
     select
         id,
@@ -45,6 +38,7 @@ grouped as (
         currency,
         amount,
         amount_cents,
+        transaction_type,
         case
 
           {% for name, categories in grouping.items() -%}
@@ -55,7 +49,7 @@ grouped as (
 
           else 'unknown'
         end as parent_category
-    from expenses
+    from transactions
 )
 
 select * from grouped

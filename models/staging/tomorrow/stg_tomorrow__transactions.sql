@@ -52,7 +52,11 @@ normalized as (
         normalized_amount::DECIMAL as amount,
         (normalized_amount::DECIMAL * 100)::INT as amount_cents,
         lcase(category) as raw_category,
-        row_number() over (order by booking_date, amount) as id
+        row_number() over (order by booking_date, amount) as id,
+        case
+            when normalized_amount::DECIMAL < 0 then 'expense'
+            else 'income'
+        end as transaction_type
     from source
 ),
 
